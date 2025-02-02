@@ -21,11 +21,19 @@
 
 let
   version = "0.13.2";
+  version-dev = "${version}-dev-2025-05-31.1";
   sources = fetchFromGitHub {
     owner = "ActivityWatch";
     repo = "activitywatch";
     rev = "v${version}";
     sha256 = "sha256-Z3WAg3b1zN0nS00u0zIose55JXRzQ7X7qy39XMY7Snk=";
+    fetchSubmodules = true;
+  };
+  sources-server-rust = fetchFromGitHub {
+    owner = "istudyatuni";
+    repo = "aw-server-rust";
+    rev = "e8111db8b3a6371b777e5d074954d77040179ba3";
+    sha256 = "sha256-88EtD3D0Co4zc7bMyGmOrdY134LFMbAQIKVjTW75Wd0=";
     fetchSubmodules = true;
   };
 in
@@ -183,12 +191,12 @@ rec {
 
   aw-server-rust = rustPlatform.buildRustPackage {
     pname = "aw-server-rust";
-    inherit version;
+    version = version-dev;
 
-    src = "${sources}/aw-server-rust";
+    src = sources-server-rust;
 
     useFetchCargoVendor = true;
-    cargoHash = "sha256-E89E/LWBPHtb6vX94swodmE+UrWMrzQnm8AO5GeyuoA=";
+    cargoHash = "sha256-Caq7e8uVYufTpqT/BJxhuUhi2DgMzMVEbrlRpNZWAlM=";
 
     patches = [
       # Override version string with hardcoded value as it may be outdated upstream.
@@ -227,11 +235,11 @@ rec {
 
   aw-webui = buildNpmPackage {
     pname = "aw-webui";
-    inherit version;
+    version = version-dev;
 
-    src = "${sources}/aw-server-rust/aw-webui";
+    src = "${sources-server-rust}/aw-webui";
 
-    npmDepsHash = "sha256-fPk7UpKuO3nEN1w+cf9DIZIG1+XRUk6PJfVmtpC30XE=";
+    npmDepsHash = "sha256-+UucKcwx0qygCejIZKeetj8G1o145Ka7QalWJ4BDDkE=";
 
     makeCacheWritable = true;
 
