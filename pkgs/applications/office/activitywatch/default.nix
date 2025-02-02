@@ -183,11 +183,17 @@ rec {
 
   aw-server-rust = rustPlatform.buildRustPackage {
     pname = "aw-server-rust";
-    inherit version;
+    version = "${version}-dev";
 
-    src = "${sources}/aw-server-rust";
+    src = fetchFromGitHub {
+      owner = "istudyatuni";
+      repo = "aw-server-rust";
+      rev = "8adbf9d7eee229734a96faeaa7b26be125aa2037";
+      sha256 = "sha256-+8ewGp5Rm78AiW5KNNdp7wLTBOfrfxv2+tMbM3WH4Gs=";
+      fetchSubmodules = true;
+    };
 
-    cargoHash = "sha256-2KnfLNVw48VVQ1Ec8MS2MaiA3BpGeFd/uIrJRHhaJR8=";
+    cargoHash = "sha256-Nvxavfi9D4o+vR2AVDIHwzzbff7GbiCHDr+U/xCdGbs=";
 
     patches = [
       # Override version string with hardcoded value as it may be outdated upstream.
