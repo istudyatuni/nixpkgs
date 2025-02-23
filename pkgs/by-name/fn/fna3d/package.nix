@@ -3,11 +3,11 @@
   stdenv,
   fetchFromGitHub,
   cmake,
-  SDL2,
+  SDL3,
 }:
 stdenv.mkDerivation rec {
   pname = "fna3d";
-  version = "25.02";
+  version = "25.02-SDL3";
 
   src = fetchFromGitHub {
     owner = "FNA-XNA";
@@ -17,8 +17,12 @@ stdenv.mkDerivation rec {
     hash = "sha256-0rRwIbOciPepo+ApvJiK5IyhMdq/4jsMlCSv0UeDETs=";
   };
 
-  buildInputs = [ SDL2 ];
+  buildInputs = [ SDL3 ];
   nativeBuildInputs = [ cmake ];
+
+  cmakeFlags = [
+    "-DBUILD_SDL3=ON"
+  ];
 
   installPhase = ''
     runHook preInstall
